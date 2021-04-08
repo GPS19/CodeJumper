@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 80f987a3ec8274f47a6266ca2e716d17
   - enabled: 1
-    path: Assets/Scenes/Jugar.unity
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 155ee012c7534414dbf915c69171f31c
+  - enabled: 1
+    path: Assets/Scenes/MUNDO_1 NIVEL_1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/World 1 Level 2.unity
+    guid: 41496c8eb36845049896812f633d3d92
   m_configObjects: {}

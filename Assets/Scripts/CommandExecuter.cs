@@ -7,7 +7,9 @@ public class CommandExecuter : MonoBehaviour
 {
     [SerializeField] private CodeSlot head;
     private bool playing = false;
+    public int numberDeaths = 0;
     public bool gameOver = false;
+    public int numberCommands = 0;
 
     public void updateList(CodeSlot slot) // Called when a CodeBlock is removed or added
     {
@@ -33,6 +35,7 @@ public class CommandExecuter : MonoBehaviour
         CodeSlot current = head;
         while (current.data && !gameOver)
         {
+            numberCommands++;
             current.data.GetComponent<DragDrop>().Run();
 
             yield return new WaitForSeconds(1f);
