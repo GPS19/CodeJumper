@@ -13,48 +13,58 @@ public class LevelComplete : MonoBehaviour
     [SerializeField] private Text commands;
     [SerializeField] private GameObject levelCompleteCanvas;
     
-    private bool visible = false;
+    private float timer = 0f;
+    private float minutes = 0f;
+    private float seconds = 0f;
     private CommandExecuter commandExecuter;
 
     private void Start()
     {
         commandExecuter = FindObjectOfType<CommandExecuter>();
         level.text = SceneManager.GetActiveScene().name.Replace(" ", "/");
-        //time.text = TODO start timer when the active scene is loaded
-        deaths.text = commandExecuter.numberDeaths.ToString();
-        commands.text = commandExecuter.numberCommands.ToString();
     }
 
     private void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (!commandExecuter.gameOver)
         {
-            deaths.text = commandExecuter.numberDeaths.ToString();
-            commands.text = commandExecuter.numberCommands.ToString();
-            levelCompleteCanvas.SetActive(!visible);
-            visible = !visible;
+            timer += Time.deltaTime;
         }
     }
-    
+
     public void LoadNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Time.timeScale = 1;
     }
 
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1;
     }
 
     public void LoadLevelSelect()
     {
         SceneManager.LoadScene("LevelSelect");
+        Time.timeScale = 1;
+    }
+
+    private void TimerFormat()
+    {
+        minutes = Mathf.FloorToInt(timer / 60);
+        seconds = Mathf.FloorToInt(timer % 60);
+        time.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //player.transform.position = player.startingPos;
-        //gameOver.gameOver = true;
+        commandExecuter.blockRaycast.blocksRaycasts = true;
+        commandExecuter.gameOver = true;
+        TimerFormat();
+        deaths.text = commandExecuter.numberDeaths.ToString();
+        commands.text = commandExecuter.numberCommands.ToString();
+        levelCompleteCanvas.SetActive(true);
+        Time.timeScale = 0;
     }
 }
