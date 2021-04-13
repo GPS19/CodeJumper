@@ -35,7 +35,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         Derecha,
         Izquierda,
-        Saltar,
+        SaltarDer,
+        SaltarIzq
     };
     
 
@@ -45,7 +46,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         initialPos = rectTransform.anchoredPosition;
-        Debug.Log(initialPos);
     }
 
     private void Start()
@@ -55,7 +55,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData) // Function called when we begin dragging object
     {
-        Debug.Log("OnBeginDrag");
         canvasGroup.blocksRaycasts = false; // This line makes the raycast go through this object and land on the CodeSlot
         onSlot = false;
         dragged = true;
@@ -64,7 +63,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         
         if (codeSlot != null) // Will remove CodeSlot.data if this code block has been assigned to a code slot
         {
-            Debug.Log("Check");
             codeSlot.removeData();
             codeSlot = null;
         }
@@ -72,13 +70,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnDrag(PointerEventData eventData) // Function called every frame while the object is being dragged
     {
-        Debug.Log("OnDrag");
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor; // eventData.delta contains the amount the mouse moved since the last frame. Divided by canvas.scaleFactor to match movement with any screen size
     }
 
     public void OnEndDrag(PointerEventData eventData) // Function called when we end dragging object
     {
-        Debug.Log("OnEndDrag");
         canvasGroup.blocksRaycasts = true; // Return to true so that this object can now receive events
         if (!onSlot)
         {
@@ -88,7 +84,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnPointerDown(PointerEventData eventData) // Function called when mouse is pressed on top of this object
     {
-        Debug.Log("OnPointerDown Drag");
         if (!onSlot)
         {
             GameObject block = Instantiate(codeBlock, transform.position, Quaternion.identity); // Instantiating new CodeBlock
@@ -102,9 +97,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         if (!onSlot && !dragged) 
         {
             Destroy(gameObject); // Destroy CodeBlock if it was placed on an invalid position
-            Debug.Log("OnPointerUp");
         }
-        Debug.Log("OnPointerUp");
         dragged = false;
     }
 
@@ -136,8 +129,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             case BlockType.Izquierda:
                 StartCoroutine(IzqRoutine(1));
                 break;
-            case BlockType.Saltar:
-                StartCoroutine(SaltoRoutine());
+            case BlockType.SaltarDer:
+                StartCoroutine(SaltoDerRoutine());
+                break;
+            case BlockType.SaltarIzq:
+                StartCoroutine(SaltoIzqRoutine());
                 break;
         }
     }
@@ -174,12 +170,27 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         player.animation.SetBool(PlayerMovement.Walking, false);
     }
 
-    IEnumerator SaltoRoutine()
+    IEnumerator SaltoDerRoutine()
     {
+        player.sprite.flipX = false;
         if (player.isOnGround)
         {
             player.animation.SetBool(PlayerMovement.Jumped, true); 
             player.rigidbody.AddForce(new Vector2(6, 15), ForceMode2D.Impulse);
+
+            yield return null;
+
+            player.animation.SetBool(PlayerMovement.Walking, false);
+        }
+    }
+    
+    IEnumerator SaltoIzqRoutine()
+    {
+        player.sprite.flipX = true;
+        if (player.isOnGround)
+        {
+            player.animation.SetBool(PlayerMovement.Jumped, true); 
+            player.rigidbody.AddForce(new Vector2(-6, 15), ForceMode2D.Impulse);
 
             yield return null;
 

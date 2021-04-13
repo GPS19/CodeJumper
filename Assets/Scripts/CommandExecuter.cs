@@ -59,6 +59,7 @@ public class CommandExecuter : MonoBehaviour
         if (!gameOver)
         {
             player.transform.position = player.startingPos;
+            numberCommands = 0;
         }
         blockRaycast.blocksRaycasts = false;
     }

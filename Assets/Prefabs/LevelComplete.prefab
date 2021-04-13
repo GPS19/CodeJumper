@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8186826423202607394}
   - component: {fileID: 8186826423202607397}
+  - component: {fileID: 7215747052388102845}
   - component: {fileID: 8186826423202607395}
   m_Layer: 0
   m_Name: LevelComplete
@@ -49,6 +50,20 @@ MonoBehaviour:
   deaths: {fileID: 0}
   commands: {fileID: 0}
   levelCompleteCanvas: {fileID: 0}
+--- !u!114 &7215747052388102845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186826423202607396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c016a2d7a146bf46bc85fd95cfa64d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiURL: http://localhost:5000/api/gamedata
+  levelComplete: {fileID: 0}
 --- !u!61 &8186826423202607395
 BoxCollider2D:
   m_ObjectHideFlags: 0

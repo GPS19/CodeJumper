@@ -16,12 +16,17 @@ public class LevelComplete : MonoBehaviour
     private float timer = 0f;
     private float minutes = 0f;
     private float seconds = 0f;
-    private CommandExecuter commandExecuter;
+    public string formatedTime;
+    public CommandExecuter commandExecuter;
+    public string levelName;
+    private wwwFormGameData gameData;
 
     private void Start()
     {
+        gameData = GetComponent<wwwFormGameData>();
         commandExecuter = FindObjectOfType<CommandExecuter>();
-        level.text = SceneManager.GetActiveScene().name.Replace(" ", "/");
+        levelName = SceneManager.GetActiveScene().name.Replace(" ", "/");
+        level.text = levelName;
     }
 
     private void Update()
@@ -54,7 +59,8 @@ public class LevelComplete : MonoBehaviour
     {
         minutes = Mathf.FloorToInt(timer / 60);
         seconds = Mathf.FloorToInt(timer % 60);
-        time.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        formatedTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+        time.text = formatedTime;
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,5 +72,6 @@ public class LevelComplete : MonoBehaviour
         commands.text = commandExecuter.numberCommands.ToString();
         levelCompleteCanvas.SetActive(true);
         Time.timeScale = 0;
+        StartCoroutine(gameData.uploadData());
     }
 }
