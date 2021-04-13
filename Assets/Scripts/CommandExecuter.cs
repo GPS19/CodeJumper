@@ -49,7 +49,7 @@ public class CommandExecuter : MonoBehaviour
             numberCommands++;
             current.data.GetComponent<DragDrop>().Run();
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
             
             current = current.next;
         }
@@ -68,5 +68,4 @@ public class CommandExecuter : MonoBehaviour
         gameOver = false;
         StartCoroutine(ExecuteRoutine());
     }
-    
 }

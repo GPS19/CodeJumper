@@ -1904,6 +1904,7 @@ MonoBehaviour:
   codeBlock: {fileID: 1209768246123087986, guid: 2f4481c9b3a23e94181b47ee0494a38b,
     type: 3}
   codeSlot: {fileID: 0}
+  positionToMoveTo: {x: 0, y: 0, z: 0}
   blockType: 0
 --- !u!225 &4885619328504292230
 CanvasGroup:
@@ -2308,6 +2309,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5559251326454294225, guid: 2d3e2edecd0b7ae4b965e4c0c48bd038,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5559251326454294225, guid: 2d3e2edecd0b7ae4b965e4c0c48bd038,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5559251326454294230, guid: 2d3e2edecd0b7ae4b965e4c0c48bd038,
         type: 3}
       propertyPath: m_Follow
@@ -2326,7 +2337,7 @@ PrefabInstance:
     - target: {fileID: 5559251326468043770, guid: 2d3e2edecd0b7ae4b965e4c0c48bd038,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.71
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 5559251326468043770, guid: 2d3e2edecd0b7ae4b965e4c0c48bd038,
         type: 3}
@@ -2708,7 +2719,7 @@ PrefabInstance:
     - target: {fileID: 8165076628775825639, guid: da85c971f1d77d944a102a50211a8027,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.71
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 8165076628775825639, guid: da85c971f1d77d944a102a50211a8027,
         type: 3}

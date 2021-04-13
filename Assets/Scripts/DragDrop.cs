@@ -22,6 +22,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private bool onSlot;
     private bool dragged = false;
     public CodeSlot codeSlot = null;
+    
+    public Vector3 positionToMoveTo;
 
     [SerializeField] private BlockType blockType;
 
@@ -129,43 +131,46 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         switch (blockType)
         {
             case BlockType.Derecha:
-                Debug.Log("Derecha");
-                StartCoroutine(DerechaRoutine());
+                StartCoroutine(DerechaRoutine(1));
                 break;
             case BlockType.Izquierda:
-                Debug.Log("Izquierda");
-                StartCoroutine(IzqRoutine());
+                StartCoroutine(IzqRoutine(1));
                 break;
             case BlockType.Saltar:
-                Debug.Log("Saltar");
                 StartCoroutine(SaltoRoutine());
                 break;
         }
     }
 
-    IEnumerator DerechaRoutine()
+    IEnumerator DerechaRoutine(float duration)
     {
+        float time = 0;
+
         player.sprite.flipX = false;
-        for (int i = 0; i < 50; i++)
+        while (time < duration)
         {
             player.animation.SetBool(PlayerMovement.Walking, true);
-            player.transform.Translate(new Vector3(5, 0, 0) * player.speed * Time.deltaTime);
-            
-            //backgroundLayer1.Translate(new Vector3(-1, 0, 0) * backgroundMoveScale * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            player.transform.Translate(new Vector3(8, 0, 0) * Time.deltaTime, Space.World);
+            time += Time.deltaTime;
+            yield return null;
         }
+        
         player.animation.SetBool(PlayerMovement.Walking, false);
     }
     
-    IEnumerator IzqRoutine()
+    IEnumerator IzqRoutine(float duration)
     {
+        float time = 0;
+
         player.sprite.flipX = true;
-        for (int i = 0; i < 50; i++)
+        while (time < duration)
         {
             player.animation.SetBool(PlayerMovement.Walking, true);
-            player.transform.Translate(new Vector3(-5, 0, 0) * player.speed * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
+            player.transform.Translate(new Vector3(-8, 0, 0) * Time.deltaTime, Space.World);
+            time += Time.deltaTime;
+            yield return null;
         }
+        
         player.animation.SetBool(PlayerMovement.Walking, false);
     }
 
@@ -174,9 +179,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         if (player.isOnGround)
         {
             player.animation.SetBool(PlayerMovement.Jumped, true); 
-            player.rigidbody.AddForce(Vector3.up * player.jumpHeight, ForceMode2D.Impulse);
+            player.rigidbody.AddForce(new Vector2(6, 15), ForceMode2D.Impulse);
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
 
             player.animation.SetBool(PlayerMovement.Walking, false);
         }
