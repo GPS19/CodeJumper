@@ -39,38 +39,7 @@ public class PlayerMovement : MonoBehaviour
         startingPos = GetComponent<Transform>().position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Move();
-    }
-
-    void Move()
-    {
-        animation.SetBool(Walking, false);
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            animation.SetBool(Walking, true);
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
-            sprite.flipX = true;
-        }
-        
-        if (Input.GetKey(KeyCode.D))
-        {
-            animation.SetBool(Walking, true);
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
-            sprite.flipX = false;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
-        {
-            animation.SetBool(Jumped, true);
-            rigidbody.AddForce(Vector3.up * jumpHeight, ForceMode2D.Impulse);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         isOnGround = false;
     }

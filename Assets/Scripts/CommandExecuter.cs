@@ -60,6 +60,7 @@ public class CommandExecuter : MonoBehaviour
         {
             player.transform.position = player.startingPos;
             numberCommands = 0;
+            numberDeaths++;
         }
         blockRaycast.blocksRaycasts = false;
     }

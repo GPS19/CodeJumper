@@ -31,10 +31,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("LevelSelect");
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        player.transform.position = player.startingPos;
-        gameOver.gameOver = true;
         gameOver.numberDeaths++;
+        player.transform.position = player.startingPos + new Vector3(0, 3, 0);
+        player.isOnGround = true;
+        gameOver.gameOver = true;
     }
 }

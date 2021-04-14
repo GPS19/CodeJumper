@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 function connectToDB() {
     // Change the data to match your configuration.
     try {
-        return mysql.createConnection({ host: 'localhost', user: 'root', password: 'Lamartine_231_Naaa_0bgu', database: 'game' });
+        return mysql.createConnection({ host: 'localhost', user: 'root', password: '...', database: 'game' });
     }
     catch (error) {
         console.log(error);

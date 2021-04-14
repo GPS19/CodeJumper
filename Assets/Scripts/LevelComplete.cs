@@ -73,5 +73,6 @@ public class LevelComplete : MonoBehaviour
         levelCompleteCanvas.SetActive(true);
         Time.timeScale = 0;
         StartCoroutine(gameData.uploadData());
+        // commandExecuter.numberDeaths = 0;
     }
 }
