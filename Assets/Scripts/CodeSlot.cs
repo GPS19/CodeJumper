@@ -26,7 +26,6 @@ public class CodeSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData) // Function called when a draggable object is dropped in here
     {
-        Debug.Log("OnDrop");
         if (eventData.pointerDrag != null)
         {
             if (!beingUsed)
