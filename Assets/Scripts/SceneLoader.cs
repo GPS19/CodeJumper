@@ -4,16 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/*
+ * Pablo Yamamoto, Santiago Kohn, Gianluca Beltran
+ *
+ * Script to handle the main menu
+ */
+
 public class SceneLoader : MonoBehaviour
 {
     private PlayerMovement player;
     [SerializeField] CommandExecuter gameOver;
     
-    private void Start()
+    private void Start() // fetch the player instance
     {
         player = PlayerMovement.instance;
     }
-    private void Update()
+    private void Update() // if escaped is pressed the main menu is loaded
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -31,7 +37,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("LevelSelect");
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other) // game over collider, if player enters this collider, his poisition is reset and his deaths incremented
     {
         gameOver.numberDeaths++;
         player.transform.position = player.startingPos + new Vector3(0, 3, 0);

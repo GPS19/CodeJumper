@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/*
+ * Pablo Yamamoto, Santiago Kohn, Gianluca Beltran
+ *
+ * Script to handle code slots
+ * data they carry and reference to one another
+ *
+ */
+
 public class CodeSlot : MonoBehaviour, IDropHandler
 {
     

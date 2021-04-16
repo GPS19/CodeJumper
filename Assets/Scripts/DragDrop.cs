@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
  *
  * Script to handle drag and drop actions.
  * Mainly used on CodeBlock objects.
+ * Handles command instructions, right, left, jumpright, jumpleft
  */
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerUpHandler, IDropHandler
@@ -28,10 +29,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     [SerializeField] private BlockType blockType;
 
     private PlayerMovement player;
-    //public Transform backgroundLayer1;
-    //public float backgroundMoveScale = 1f;
     
-    private enum BlockType
+    private enum BlockType // create the types of blocks we are using 
     {
         Derecha,
         Izquierda,
@@ -119,9 +118,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         }
     }
 
-    public void Run()
+    public void Run() // main run function called when the green play button is pressed
     {
-        switch (blockType)
+        // switch used to handle all of the code block cases and calling the apropriate coroutine
+        switch (blockType) 
         {
             case BlockType.Derecha:
                 StartCoroutine(DerechaRoutine(1));
@@ -138,23 +138,23 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         }
     }
 
-    IEnumerator DerechaRoutine(float duration)
+    IEnumerator DerechaRoutine(float duration) // coroutine for right code block
     {
         float time = 0;
 
-        player.sprite.flipX = false;
-        while (time < duration)
+        player.sprite.flipX = false; // we makle sure not to flip sprite, because player is moving right
+        while (time < duration) // while elapsed time is less than the duration of our command duration keep going
         {
-            player.animation.SetBool(PlayerMovement.Walking, true);
-            player.transform.Translate(new Vector3(8, 0, 0) * Time.deltaTime, Space.World);
-            time += Time.deltaTime;
+            player.animation.SetBool(PlayerMovement.Walking, true); // start walking animation
+            player.transform.Translate(new Vector3(8, 0, 0) * Time.deltaTime, Space.World); // every loop transale 8 spaceworld units
+            time += Time.deltaTime; // increment time by the time between frames
             yield return null;
         }
         
-        player.animation.SetBool(PlayerMovement.Walking, false);
+        player.animation.SetBool(PlayerMovement.Walking, false); // stop walking animation
     }
     
-    IEnumerator IzqRoutine(float duration)
+    IEnumerator IzqRoutine(float duration) // coroutine for left code block same logic as right block but on opposite direction
     {
         float time = 0;
 
@@ -170,21 +170,21 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         player.animation.SetBool(PlayerMovement.Walking, false);
     }
 
-    IEnumerator SaltoDerRoutine()
+    IEnumerator SaltoDerRoutine() // coroutine for jumpright code block
     {
         player.sprite.flipX = false;
-        if (player.isOnGround)
+        if (player.isOnGround) // if the player is on ground
         {
-            player.animation.SetBool(PlayerMovement.Jumped, true); 
-            player.rigidbody.AddForce(new Vector2(6, 15), ForceMode2D.Impulse);
+            player.animation.SetBool(PlayerMovement.Jumped, true); // set jumping animation to true
+            player.rigidbody.AddForce(new Vector2(6, 15), ForceMode2D.Impulse); // impulse the rigidbody of the player up and to the right
 
             yield return null;
 
-            player.animation.SetBool(PlayerMovement.Walking, false);
+            player.animation.SetBool(PlayerMovement.Walking, false); // set jumping animation to false
         }
     }
     
-    IEnumerator SaltoIzqRoutine()
+    IEnumerator SaltoIzqRoutine() // coroutine for jumpleft code block same logic as jumpright block but on opposite direction
     {
         player.sprite.flipX = true;
         if (player.isOnGround)

@@ -3,11 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Pablo Yamamoto, Santiago Kohn, Gianluca Beltran
+ *
+ * Script in charge of isntantiating the player class
+ *
+ */
+
 public class PlayerMovement : MonoBehaviour
 {
 
-    [SerializeField] public float speed = 0.5f;
-    [SerializeField] public float jumpHeight = 0.5f;
+    // Fetch all player information
     public Animator animation;
     public Rigidbody2D rigidbody;
     public SpriteRenderer sprite;
@@ -20,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        if (PlayerMovement.instance == null)
+        if (PlayerMovement.instance == null) // if an instance of the player already exists, destroy this gameobject else create new instance
         {
             instance = this;
         }
@@ -33,20 +39,20 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animation = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        startingPos = GetComponent<Transform>().position;
+        animation = GetComponent<Animator>(); // fetch animator component
+        rigidbody = GetComponent<Rigidbody2D>(); // fetch rigidbody component
+        sprite = GetComponent<SpriteRenderer>(); // fetch sprite component
+        startingPos = GetComponent<Transform>().position; // fetch players starting position
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        isOnGround = false;
+        isOnGround = false; // when the players collider exists the ground, isOnGround is declared false
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        animation.SetBool(Jumped, false);
-        isOnGround = true;
+        animation.SetBool(Jumped, false); // when the players collider lands on the ground the jumping animation is set to false
+        isOnGround = true; 
     }
 }

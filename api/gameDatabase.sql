@@ -18,6 +18,11 @@
 --
 -- Table structure for table `game_data`
 --
+DROP DATABASE IF EXISTS `game`;
+
+CREATE DATABASE `game`;
+
+USE game;
 
 DROP TABLE IF EXISTS `game_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

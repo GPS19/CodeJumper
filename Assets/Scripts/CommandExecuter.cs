@@ -4,13 +4,19 @@ using System.Transactions;
 using UnityEditor.Scripting;
 using UnityEngine;
 
+/*
+ * Pablo Yamamoto, Santiago Kohn, Gianluca Beltran
+ *
+ * Script to excute all of the players 
+ * instructions
+ */
+
 public class CommandExecuter : MonoBehaviour
 {
     [SerializeField] private CodeSlot head;
     [SerializeField] private Canvas blockCanvas;
     
     private PlayerMovement player;
-    private bool playing = false;
     public int numberDeaths = 0;
     public bool gameOver = false;
     public int numberCommands = 0;
@@ -42,30 +48,30 @@ public class CommandExecuter : MonoBehaviour
 
     public IEnumerator ExecuteRoutine()
     {
-        blockRaycast.blocksRaycasts = true;
+        blockRaycast.blocksRaycasts = true; // When movement commands are being executed, we block the raycast so that the user can't alter the commands
         CodeSlot current = head;
-        while (current.data && !gameOver)
+        while (current.data && !gameOver) // While there are commands to run and the player hasn't lost, commands keep being executed
         {
-            numberCommands++;
-            current.data.GetComponent<DragDrop>().Run();
+            numberCommands++; // Track number of comands used
+            current.data.GetComponent<DragDrop>().Run(); // Get command to be executed
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.5f); // Wait for 1.5 seconds to execute next command
             
-            current = current.next;
+            current = current.next; // make current command = next command
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f); // wait for one second
         
-        if (!gameOver)
+        if (!gameOver) // if the player didnt reach the goal with the number of commands used
         {
-            player.transform.position = player.startingPos;
-            numberCommands = 0;
-            numberDeaths++;
+            player.transform.position = player.startingPos; // reset characters position
+            numberCommands = 0; // reset command count
+            numberDeaths++; // increment number of deaths
         }
-        blockRaycast.blocksRaycasts = false;
+        blockRaycast.blocksRaycasts = false; // when all of the commands have been executed and all cases have been handled, stop blocking raycasts so the user can keep playing
     }
     
-    public void Execute()
+    public void Execute() // main function, called when green play button is pressed, execute all user commands
     {
         gameOver = false;
         StartCoroutine(ExecuteRoutine());
