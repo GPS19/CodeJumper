@@ -87,6 +87,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
             GameObject block = Instantiate(codeBlock, transform.position, Quaternion.identity); // Instantiating new CodeBlock
             block.transform.SetParent(transform.parent); // Setting new CodeBlock as a child of the canvas
+            block.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
         
     }

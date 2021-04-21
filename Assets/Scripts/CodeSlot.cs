@@ -38,6 +38,7 @@ public class CodeSlot : MonoBehaviour, IDropHandler
                 GameObject slot = Instantiate(codeSlot, transform.position, Quaternion.identity); // Creating new CodeSlot
                 slot.transform.SetParent(transform.parent); // Setting new CodeSlot as child of Canvas
                 slot.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, -100); // Update position of new CodeSlot
+                slot.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                 slot.transform.SetSiblingIndex(1); // Moving new CodeSlot up in the hierarchy so that CodeBlocks can be seen in front of it
 
                 // Setting node connections
