@@ -2,6 +2,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const { response } = require('express');
 
 const app = express();
 const port = 5000;
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 function connectToDB() {
     // Change the data to match your configuration.
     try {
-        return mysql.createConnection({ host: 'localhost', user: 'root', password: '...', database: 'game' });
+        return mysql.createConnection({ host: 'localhost', user: 'root', password: 'kokoloco', database: 'game', insecureAuth: true });
     }
     catch (error) {
         console.log(error);
@@ -52,6 +53,27 @@ app.post('/api/gamedata', (request, response) => {
         response.json(error);
     }
 });
+
+app.get('/api/chartData', (request, response) => {
+    try {
+        let connection = connectToDB();
+        connection.connect();
+        console.log(request.body)
+        // Query to get the table of the database
+        const query = connection.query('select * from game_data', (error, result, fields) => {
+            if (error) throw error;
+
+            response.json(result);
+            console.log(result);
+        });
+        connection.end();
+    }
+    catch (error) {
+        console.log(error);
+        connection.end();
+        response.json(error);
+    }
+})
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
