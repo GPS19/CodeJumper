@@ -18,6 +18,7 @@ public class SceneLoader : MonoBehaviour
     private void Start() // fetch the player instance
     {
         player = PlayerMovement.instance;
+
     }
     private void Update() // if escaped is pressed the main menu is loaded
     {
@@ -35,6 +36,22 @@ public class SceneLoader : MonoBehaviour
     public void LoadLevelSelect()
     {
         SceneManager.LoadScene("LevelSelect");
+    }
+
+    public void LoadCredits()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Credits");
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void LoadOptions()
+    {
+        SceneManager.LoadScene("OptionsMenu");
     }
 
     private void OnCollisionEnter2D(Collision2D other) // game over collider, if player enters this collider, his poisition is reset and his deaths incremented
